@@ -1,0 +1,9 @@
+body {
+	background: #7289DA;
+	margin: 2%;
+	height: 0% !important;
+}
+
+#messages div.message {
+	display: none;
+}

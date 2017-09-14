@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<title>Discord Emoji Downloader</title>
+
+	<meta name="author" content="Tiemen" />
+	<meta name="description" content="Get all emojis from a server in a ZIP file." />
+	<meta name="keywords" content="discord, emoji, emojis, discordapp, discord app, emoji downloader, download emoji" />
+
+	<meta property="og:title" content="Discord Emoji Downloader" />
+	<meta property="og:description" content="Get all emojis from a server in a ZIP file." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://thatiemsz.github.io/Discord-Emoji-Downloader/" />
+	<!-- <meta property="og:image" name="Image" content="assets/thumbnail.png"/> -->
+
+	<!-- <link rel="shortcut icon" href="assets/favicon.png" /> -->
+	<link rel="stylesheet" type="text/css" href="assets/semantic.min.css" />
+	<link rel="stylesheet" href="app.css" />
+
+	<script type="text/javascript" src="assets/jquery-3.2.1.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>	
+	<script type="text/javascript" src="assets/semantic.min.js"></script>
+	<script type="text/javascript" src="assets/FileSaver.min.js"></script>
+	<script type="text/javascript" src="assets/jszip.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</head>
+
+<body>
+	<div class="ui inverted raised very padded text container segment">
+		<h1 class="ui header">Discord Emoji Downloader</h1>
+		<p>Make a GET request to <code>https://discordapp.com/api/v6/guilds/:id</code>, with <code>:id</code> being the server ID, also make sure you're authorised with your user token. Then copy paste the response JSON data in the textarea below <i>(in which an example is placed)</i>.</p>
+		<p>
+			<div class="ui inverted form">
+				<div class="field">
+					<label>Guild Object</label>
+					<div id="editor" style="height: 350px; width: 100%;">{
+	"mfa_level": 0,
+	"emojis": [
+		{
+			"require_colons": true,
+			"managed": false,
+			"name": "really1",
+			"roles": [],
+			"id": "326074073702727682"
+		},
+		{
+			"require_colons": true,
+			"managed": false,
+			"name": "really4",
+			"roles": [],
+			"id": "326074073832620033"
+		}
+	],
+	"application_id": null,
+	"name": "big emotes",
+	"roles": [
+		{
+			"hoist": false,
+			"name": "@everyone",
+			"mentionable": false,
+			"color": 0,
+			"position": 0,
+			"id": "326073960041152512",
+			"managed": false,
+			"permissions": 104324161
+		}
+	],
+	"afk_timeout": 300,
+	"system_channel_id": null,
+	"widget_channel_id": null,
+	"region": "eu-west",
+	"default_message_notifications": 0,
+	"embed_channel_id": null,
+	"explicit_content_filter": 0,
+	"splash": null,
+	"features": [],
+	"afk_channel_id": null,
+	"widget_enabled": false,
+	"verification_level": 0,
+	"owner_id": "152164749868662784",
+	"embed_enabled": false,
+	"id": "326073960041152512",
+	"icon": null
+}</div>
+				</div>
+				<div class="field">
+					<button name="submit" id="submit" class="ui primary button">Submit</button>
+				</div>
+			</div>
+		</p>
+
+		<div id="messages">
+			<div class="ui icon message" id="loading">
+				<i class="notched circle loading icon"></i>
+				<div class="content">
+					<div class="header" id="loading-header">
+					Just a moment
+					</div>
+					<p id="loading-msg">Collecting the emojis for you.</p>
+				</div>
+			</div>
+
+			<div class="ui icon success message" id="success">
+				<i class="smile icon"></i>
+				<div class="content">
+					<div class="header" id="success-header">
+					We found them!
+					</div>
+					<p id="success-msg">Found <strong>NaN</strong> emojis which are packed in a ZIP file above.</p>
+				</div>
+			</div>
+			
+			<div class="ui icon error message" id="error">
+				<i class="warning circle icon"></i>
+				<div class="content">
+					<div class="header" id="error-header">
+						There were some errors with your submission
+					</div>
+					<p id="error-msg"></p>
+				</div>
+			</div>
+		</div>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-json.js"></script>
+	<script type="text/javascript">
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/monokai");
+	editor.getSession().setMode("ace/mode/json");
+	</script>
+</body>
+</html>
