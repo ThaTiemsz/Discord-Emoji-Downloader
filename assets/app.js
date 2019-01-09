@@ -29,6 +29,63 @@ const sortAlpha = (a, b) => {
     return a < b ? -1 : a > b ? 1 : 0
 }
 
+let editor = ace.edit("editor");
+editor.setTheme("ace/theme/monokai");
+editor.getSession().setMode("ace/mode/json");
+editor.session.setUseWrapMode(true);
+editor.setValue(`{
+"mfa_level": 0,
+"emojis": [
+    {
+        "require_colons": true,
+        "animated": false,
+        "managed": false,
+        "name": "really1",
+        "roles": [],
+        "id": "326074073702727682"
+    },
+    {
+        "require_colons": true,
+        "animated": false,
+        "managed": false,
+        "name": "really4",
+        "roles": [],
+        "id": "326074073832620033"
+    }
+],
+"application_id": null,
+"name": "big emotes",
+"roles": [
+    {
+        "hoist": false,
+        "name": "@everyone",
+        "mentionable": false,
+        "color": 0,
+        "position": 0,
+        "id": "326073960041152512",
+        "managed": false,
+        "permissions": 104324161
+    }
+],
+"afk_timeout": 300,
+"system_channel_id": null,
+"widget_channel_id": null,
+"region": "eu-west",
+"default_message_notifications": 0,
+"embed_channel_id": null,
+"explicit_content_filter": 0,
+"splash": null,
+"features": [],
+"afk_channel_id": null,
+"widget_enabled": false,
+"verification_level": 0,
+"owner_id": "152164749868662784",
+"embed_enabled": false,
+"id": "326073960041152512",
+"icon": null
+}`);
+editor.clearSelection();
+
 $(document).ready(function() {
     $(".menu .item").tab();
     $("#emojis").hide();
