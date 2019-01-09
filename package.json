@@ -4,7 +4,7 @@
   "description": "Get all emojis from a server in a ZIP file",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --public-url ./"
   },
   "repository": {
     "type": "git",
