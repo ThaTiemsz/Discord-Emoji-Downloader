@@ -14,17 +14,9 @@
     <meta property="og:description" content="Get all emojis from a server in a ZIP file." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://thatiemsz.github.io/Discord-Emoji-Downloader/" />
-    <!-- <meta property="og:image" name="Image" content="assets/thumbnail.png"/> -->
 
-    <!-- <link rel="shortcut icon" href="assets/favicon.png" /> -->
     <link rel="stylesheet" type="text/css" href="assets/semantic.min.css" />
-    <link rel="stylesheet" href="app.css" />
-    
-    <script type="text/javascript" src="assets/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="assets/semantic.min.js"></script>
-    <script type="text/javascript" src="assets/FileSaver.min.js"></script>
-    <script type="text/javascript" src="assets/jszip.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/app.css" />
 </head>
 
 <body>
@@ -47,7 +39,7 @@
             </div>
             <form class="ui inverted form">
                 <div class="field">
-                    <label>User Token <a href="javascript:void($('.ui.basic.modal').modal('show'));">(?)</a> </label>
+                    <label>User Token <a href="#" id="tokenHelp">(?)</a> </label>
                     <input type="password" name="token" id="token" placeholder="mfa.ABcd1e2Fgh3i-jKlmnoPQRstu4VWx4yz5A6b7cDEFGhiJk8LmNOPqR_sSTUV9XyzabcdeF0Xd" />
                 </div>
                 <button name="continue" id="continue" class="ui button">Continue</button>
@@ -155,6 +147,7 @@
     let editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/json");
+    editor.session.setUseWrapMode(true);
     editor.setValue(`{
     "mfa_level": 0,
     "emojis": [
@@ -208,5 +201,7 @@
 }`);
     editor.clearSelection();
     </script>
+    <script type="text/javascript" src="assets/app.js"></script>
+    <script type="text/javascript" src="assets/semantic.min.js"></script>
 </body>
 </html>
