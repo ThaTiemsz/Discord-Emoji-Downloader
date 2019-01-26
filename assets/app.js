@@ -186,8 +186,8 @@ $(document).ready(function() {
             const zip = new JSZip();
             let count = 0;
             for (let i in renamedEmoji) {
-                const req = await request(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { resolve: null });
-                zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, req);
+                const res = await request(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { encoding: null });
+                zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
                 count++;
             }
 
@@ -224,8 +224,8 @@ $(document).ready(function() {
             const zip = new JSZip();
             let count = 0;
             for (let i in renamedEmoji) {
-                const req = await request(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { resolve: null });
-                zip.file(`${renamedEmoji[i].name}.png`, req);
+                const res = await request(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { encoding: null });
+                zip.file(`${renamedEmoji[i].name}.png`, res);
                 count++;
             }
 
