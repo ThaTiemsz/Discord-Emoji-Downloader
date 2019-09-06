@@ -5,7 +5,7 @@ const { saveAs } = require("file-saver");
 const $ = require("./jquery-3.2.1.min.js");
 window.jQuery = $;
 
-const $downloadBtn = $(`<button class="ui labeled icon red button" id="download"><i class="cloud icon"></i>Download</button>`);
+const $downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
 const Emoji = (emojiID, animated = false) => `https://cdn.discordapp.com/emojis/${emojiID}.${animated ? "gif" : "png"}?v=1`;
 const API = {
     host: "https://discordapp.com/api/v6",
