@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.css"],"names":[],"mappings":"AAAA,KACC,kBAAmB,CACnB,SAAU,CACV,mBACD,CAEA,sBACC,YACD","file":"app.23d4e82e.css","sourceRoot":"..","sourcesContent":["body {\r\n\tbackground: #7289DA;\r\n\tmargin: 2%;\r\n\theight: 0% !important;\r\n}\r\n\r\n#messages div.message {\r\n\tdisplay: none;\r\n}"]}
