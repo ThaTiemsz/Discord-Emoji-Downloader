@@ -28,6 +28,13 @@ const sortAlpha = (a, b) => {
     b = b.name.toLowerCase();
     return a < b ? -1 : a > b ? 1 : 0
 }
+if (!Object.hasOwnProperty("fromEntries"))
+    Object.prototype.fromEntries = (iterable) => {
+        return [...iterable].reduce((obj, [key, val]) => {
+            obj[key] = val
+            return obj
+        }, {})
+    }
 
 let editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
@@ -89,6 +96,7 @@ editor.clearSelection();
 $(document).ready(function() {
     $(".menu .item").tab();
     $("#emojis").hide();
+    $("#emojis2").hide();
 
     $("#tokenHelp").click(() => {
         $('.ui.basic.modal').modal('show');
@@ -142,13 +150,21 @@ $(document).ready(function() {
                 this.emojis = guild.emojis;
                 this.emojis = renameEmoji(this.emojis);
                 this.emojis = this.emojis.sort(sortAlpha);
-                const emojis = this.emojis;
+                let emojis = this.emojis;
+                emojis = emojis.reduce((acc, val, i) => {
+                    if (i > 149) {
+                        acc[1].push(val);
+                    } else {
+                        acc[0].push(val);
+                    }
+                    return acc;
+                }, [[], []]);
 
                 let emojisDropdown = [];
-                for (const emoji in emojis) {
+                for (const emoji of emojis[0]) {
                     emojisDropdown.push({
-                        name: `<img src="${Emoji(emojis[emoji].id, emojis[emoji].animated)}" style="width: 1.5em!important; height: 1.5em!important;" /> ${emojis[emoji].name}`,
-                        value: emojis[emoji].id,
+                        name: `<img src="${Emoji(emoji.id, emoji.animated)}" style="width: 1.5em!important; height: 1.5em!important;" /> ${emoji.name}`,
+                        value: emoji.id,
                         selected: true
                     });
                 }
@@ -157,11 +173,30 @@ $(document).ready(function() {
                     values: emojisDropdown,
                     placeholder: "Select Emojis",
                     onChange: (value, text, $selected) => {
-                        $("#emojicount").text(`(${$("input[name='emojis']").val().split(",").length}/${emojis.length})`);
+                        $("#emojicount").text(`(${$("input[name='emojis']").val().split(",").length}/${emojis[0].length})`);
+                    }
+                })
+
+                let emojisDropdown2 = [];
+                for (const emoji of emojis[1]) {
+                    emojisDropdown2.push({
+                        name: `<img src="${Emoji(emoji.id, emoji.animated)}" style="width: 1.5em!important; height: 1.5em!important;" /> ${emoji.name}`,
+                        value: emoji.id,
+                        selected: true
+                    });
+                }
+
+                $("#emoji-select2").dropdown({
+                    values: emojisDropdown2,
+                    placeholder: "Select Emojis",
+                    onChange: (value, text, $selected) => {
+                        $("#emojicount2").text(`(${$("input[name='emojis2']").val().split(",").length}/${emojis[1].length})`);
                     }
                 })
 
                 $("#emojis").show();
+                if (emojisDropdown2.length > 0)
+                    $("#emojis2").show();
                 $(".active.dimmer").remove();
             }
         });
