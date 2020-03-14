@@ -1,11 +1,12 @@
-require("@babel/polyfill");
+require("core-js/stable");
+require("regenerator-runtime/runtime");
 const request = require("request-promise-native");
 const JSZip = require("jszip");
 const { saveAs } = require("file-saver");
 const $ = require("./jquery-3.2.1.min.js");
 window.jQuery = $;
 
-const $downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
+const downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
 const Emoji = (emojiID, animated = false) => `https://cdn.discordapp.com/emojis/${emojiID}.${animated ? "gif" : "png"}?v=1`;
 const API = {
     host: "https://discordapp.com/api/v6",
@@ -28,68 +29,61 @@ const sortAlpha = (a, b) => {
     b = b.name.toLowerCase();
     return a < b ? -1 : a > b ? 1 : 0
 }
-if (!Object.hasOwnProperty("fromEntries"))
-    Object.prototype.fromEntries = (iterable) => {
-        return [...iterable].reduce((obj, [key, val]) => {
-            obj[key] = val
-            return obj
-        }, {})
-    }
 
-let editor = ace.edit("editor");
+const editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/json");
 editor.session.setUseWrapMode(true);
 editor.setValue(`{
-"mfa_level": 0,
-"emojis": [
-    {
-        "require_colons": true,
-        "animated": false,
-        "managed": false,
-        "name": "really1",
-        "roles": [],
-        "id": "326074073702727682"
-    },
-    {
-        "require_colons": true,
-        "animated": false,
-        "managed": false,
-        "name": "really4",
-        "roles": [],
-        "id": "326074073832620033"
-    }
-],
-"application_id": null,
-"name": "big emotes",
-"roles": [
-    {
-        "hoist": false,
-        "name": "@everyone",
-        "mentionable": false,
-        "color": 0,
-        "position": 0,
-        "id": "326073960041152512",
-        "managed": false,
-        "permissions": 104324161
-    }
-],
-"afk_timeout": 300,
-"system_channel_id": null,
-"widget_channel_id": null,
-"region": "eu-west",
-"default_message_notifications": 0,
-"embed_channel_id": null,
-"explicit_content_filter": 0,
-"splash": null,
-"features": [],
-"afk_channel_id": null,
-"widget_enabled": false,
-"verification_level": 0,
-"owner_id": "152164749868662784",
-"embed_enabled": false,
-"id": "326073960041152512",
-"icon": null
+    "mfa_level": 0,
+    "emojis": [
+        {
+            "require_colons": true,
+            "animated": false,
+            "managed": false,
+            "name": "really1",
+            "roles": [],
+            "id": "326074073702727682"
+        },
+        {
+            "require_colons": true,
+            "animated": false,
+            "managed": false,
+            "name": "really4",
+            "roles": [],
+            "id": "326074073832620033"
+        }
+    ],
+    "application_id": null,
+    "name": "big emotes",
+    "roles": [
+        {
+            "hoist": false,
+            "name": "@everyone",
+            "mentionable": false,
+            "color": 0,
+            "position": 0,
+            "id": "326073960041152512",
+            "managed": false,
+            "permissions": 104324161
+        }
+    ],
+    "afk_timeout": 300,
+    "system_channel_id": null,
+    "widget_channel_id": null,
+    "region": "eu-west",
+    "default_message_notifications": 0,
+    "embed_channel_id": null,
+    "explicit_content_filter": 0,
+    "splash": null,
+    "features": [],
+    "afk_channel_id": null,
+    "widget_enabled": false,
+    "verification_level": 0,
+    "owner_id": "152164749868662784",
+    "embed_enabled": false,
+    "id": "326073960041152512",
+    "icon": null
 }`);
 editor.clearSelection();
 
@@ -102,8 +96,8 @@ $(document).ready(function() {
         $('.ui.basic.modal').modal('show');
     });
 
-    this.guild = [];
-    this.emojis = [];
+    globalThis.guild = [];
+    globalThis.emojis = [];
     $("#default-1 #continue").click(async (e) => {
         e.preventDefault(e);
 
@@ -123,8 +117,7 @@ $(document).ready(function() {
             return error(statusCode === 401 ? "Invalid token." : "Could not authenticate with Discord.");
         }
 
-        const guilds = res.body.sort(sortAlpha);
-        const guildsDropdown = guilds.map(guild => {
+        const guildsDropdown = res.body.sort(sortAlpha).map(guild => {
             return {
                 name: guild.icon
                     ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png" />${guild.name}`
@@ -138,6 +131,10 @@ $(document).ready(function() {
             placeholder: "Select Server",
             onChange: async (value, text, $selected) => {
                 $("#default-2").append(`<div class="ui active dimmer"><div class="ui loader"></div></div>`);
+                $("#error").hide();
+                $("#messages div.message").hide();
+                $("#download").remove();
+
                 let res;
                 try {
                     res = await API.request("GET", API.guild(value), token);
@@ -145,13 +142,10 @@ $(document).ready(function() {
                     return error("Could not fetch server emojis.");
                 }
 
-                const guild = res.body;
-                this.guild = guild;
-                this.emojis = guild.emojis;
-                this.emojis = renameEmoji(this.emojis);
-                this.emojis = this.emojis.sort(sortAlpha);
-                let emojis = this.emojis;
-                emojis = emojis.reduce((acc, val, i) => {
+                globalThis.guild = res.body;
+                globalThis.emojis = renameEmoji(globalThis.guild.emojis)
+                    .sort(sortAlpha);
+                let emojis = globalThis.emojis.reduce((acc, val, i) => {
                     if (i > 149) {
                         acc[1].push(val);
                     } else {
@@ -209,15 +203,15 @@ $(document).ready(function() {
     $("#default-2 #submit").click(async (e) => {
         e.preventDefault(e);
 
-        if (!this.emojis.length) return error("Please select at least one emoji.");
+        if (!globalThis.emojis.length) return error("Please select at least one emoji.");
         try {
-            if (this.guild.emojis.length < 1) return error("This server doesn't have any emojis!");
-            const cleanGuildName = this.guild.name.replace(/\s/g, "_").replace(/\W/g, "");
-            console.log("Emojis:", this.emojis.length);
+            if (globalThis.guild.emojis.length < 1) return error("This server doesn't have any emojis!");
+            const cleanGuildName = globalThis.guild.name.replace(/\s/g, "_").replace(/\W/g, "");
+            console.log("Emojis:", globalThis.emojis.length);
 
             show("#loading");
 
-            const renamedEmoji = renameEmoji(this.emojis);
+            const renamedEmoji = renameEmoji(globalThis.emojis);
             const zip = new JSZip();
             let count = 0;
             for (let i in renamedEmoji) {
@@ -228,9 +222,9 @@ $(document).ready(function() {
 
             $("#success-msg strong").text(count);
             show("#success");
-            $("#default-2 #submit").after($downloadBtn);
+            $("#default-2 #submit").after(downloadBtn);
 
-            $("#download").click(() => {
+            downloadBtn.click(() => {
                 zip.generateAsync({ type: "blob" }).then(content => {
                     saveAs(content, `Emojis_${cleanGuildName}.zip`);
                 });
@@ -266,7 +260,7 @@ $(document).ready(function() {
 
             $("#success-msg strong").text(count);
             show("#success");
-            $("#manual #submit").after($downloadBtn);
+            $("#manual #submit").after(downloadBtn);
 
             $("#download").click(() => {
                 zip.generateAsync({ type: "blob" }).then(content => {

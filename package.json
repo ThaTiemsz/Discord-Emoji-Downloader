@@ -1,6 +1,6 @@
 {
   "name": "discord-emoji-downloader",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Get all emojis from a server in a ZIP file",
   "scripts": {
     "start": "parcel index.html",
@@ -24,16 +24,16 @@
   },
   "homepage": "https://thatiemsz.github.io/Discord-Emoji-Downloader",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.2.3",
-    "parcel-bundler": "^1.12.3"
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "core-js": "^3.6.4",
+    "parcel-bundler": "^1.12.4",
+    "regenerator-runtime": "^0.13.5"
   },
   "dependencies": {
-    "file-saver": "^2.0.0",
-    "jquery": "^3.4.1",
-    "jszip": "^3.1.5",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "file-saver": "^2.0.2",
+    "jszip": "^3.2.2",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8"
   }
 }
