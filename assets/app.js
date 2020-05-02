@@ -1,6 +1,6 @@
 require("core-js/stable");
 require("regenerator-runtime/runtime");
-const request = require("request-promise-native");
+const fetch = require("node-fetch");
 const JSZip = require("jszip");
 const { saveAs } = require("file-saver");
 const $ = require("./jquery-3.2.1.min.js");
@@ -14,15 +14,12 @@ const API = {
     guilds: "/users/@me/guilds",
     guild: (id) => `/guilds/${id}`,
     request: (method, endpoint, token) => {
-        return request(API.host + endpoint, {
+        return fetch(API.host + endpoint, {
             method,
             headers: {
-                "Authorization": token,
-                "Access-Control-Allow-Origin": "*"
-            },
-            json: true,
-            resolveWithFullResponse: true
-        });
+                "Authorization": token
+            }
+        }).then(res => res.json());
     }
 }
 const sortAlpha = (a, b) => {
@@ -216,7 +213,7 @@ $(document).ready(function() {
             const zip = new JSZip();
             let count = 0;
             for (let i in renamedEmoji) {
-                const res = await request(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { encoding: null });
+                const res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { mode: "no-cors" }).then(res => res.blob());
                 zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
                 count++;
             }
@@ -254,7 +251,7 @@ $(document).ready(function() {
             const zip = new JSZip();
             let count = 0;
             for (let i in renamedEmoji) {
-                const res = await request(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { encoding: null });
+                const res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated), { mode: "no-cors" }).then(res => res.blob());
                 zip.file(`${renamedEmoji[i].name}.png`, res);
                 count++;
             }

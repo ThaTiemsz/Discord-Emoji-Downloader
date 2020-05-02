@@ -33,7 +33,6 @@
   "dependencies": {
     "file-saver": "^2.0.2",
     "jszip": "^3.2.2",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.8"
+    "node-fetch": "^2.6.0"
   }
 }
