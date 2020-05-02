@@ -17,7 +17,8 @@ const API = {
         return request(API.host + endpoint, {
             method,
             headers: {
-                "Authorization": token
+                "Authorization": token,
+                "Access-Control-Allow-Origin": "*"
             },
             json: true,
             resolveWithFullResponse: true
