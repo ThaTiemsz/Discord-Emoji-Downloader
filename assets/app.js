@@ -9,17 +9,17 @@ window.jQuery = $;
 const downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
 const Emoji = (emojiID, animated = false) => `https://cdn.discordapp.com/emojis/${emojiID}.${animated ? "gif" : "png"}?v=1`;
 const API = {
-    host: "https://discordapp.com/api/v6",
+    host: "https://discord.com/api/v6",
     emojis: (guild) => `/guilds/${guild}/emojis`,
     guilds: "/users/@me/guilds",
     guild: (id) => `/guilds/${id}`,
-    request: (method, endpoint, token) => {
-        return _fetch(API.host + endpoint, {
+    request: async (method, endpoint, token) => {
+        return await _fetch(API.host + endpoint, {
             method,
             headers: {
                 "Authorization": token
             }
-        }).then(res => res.json());
+        });
     }
 }
 const sortAlpha = (a, b) => {
@@ -108,14 +108,10 @@ $(document).ready(function() {
 
         success = true
 
-        let res;
-        try {
-            res = await API.request("GET", API.guilds, token);
-        } catch ({ statusCode }) {
-            return error(statusCode === 401 ? "Invalid token." : "Could not authenticate with Discord.");
-        }
+        let res = await API.request("GET", API.guilds, token);
+        if (!res.ok) return error(res.status === 401 ? "Invalid token." : "Could not authenticate with Discord.");
 
-        const guildsDropdown = res.body.sort(sortAlpha).map(guild => {
+        const guildsDropdown = (await res.json()).sort(sortAlpha).map(guild => {
             return {
                 name: guild.icon
                     ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png" />${guild.name}`
@@ -133,14 +129,10 @@ $(document).ready(function() {
                 $("#messages div.message").hide();
                 $("#download").remove();
 
-                let res;
-                try {
-                    res = await API.request("GET", API.guild(value), token);
-                } catch {
-                    return error("Could not fetch server emojis.");
-                }
+                let res = await API.request("GET", API.guild(value), token);
+                if (!res.ok) return error("Could not fetch server emojis.");
 
-                globalThis.guild = res.body;
+                globalThis.guild = await res.json();
                 globalThis.emojis = renameEmoji(globalThis.guild.emojis)
                     .sort(sortAlpha);
                 let emojis = globalThis.emojis.reduce((acc, val, i) => {
