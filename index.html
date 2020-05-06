@@ -9,7 +9,7 @@
     <meta name="description" content="Get all emojis from a server in a ZIP file." />
     <meta name="keywords" content="discord, emoji, emojis, discordapp, discord app, emoji downloader, download emoji" />
     <meta name="theme-color" content="#7289DA" />
-    
+
     <meta property="og:title" content="Discord Emoji Downloader" />
     <meta property="og:description" content="Get all emojis from a server in a ZIP file." />
     <meta property="og:type" content="website" />
@@ -92,7 +92,7 @@
                 </div>
             </p>
         </div>
-        
+
         <div id="messages">
             <div class="ui icon message" id="loading">
                 <i class="notched circle loading icon"></i>
@@ -113,7 +113,7 @@
                     <p id="success-msg">Found <strong>NaN</strong> emojis which are packed in a ZIP file above.</p>
                 </div>
             </div>
-            
+
             <div class="ui icon error message" id="error">
                 <i class="warning circle icon"></i>
                 <div class="content">
@@ -132,12 +132,16 @@
             <div class="content">
                 <p>
                     <ul>
-                        <li>Open the Discord desktop app or login on the Discord website <a href="https://discordapp.com/login" target="_blank">here</a></li>
-                        <li>Open the Chrome Dev Tools with the keyboard shortcut <pre>Ctrl + Shift + I</pre></li>
-                        <li>Go to the Application tab</li>
-                        <li>Go to Storage -> Local Storage -> discordapp.com</li>
-                        <li>Find the token row and copy it (make sure you remove the quotes)</li>
+                        <li>Open the Discord desktop app or login on the Discord website <a href="https://discord.com/app" target="_blank">here</a></li>
+                        <li>Open the Chrome Dev Tools with the keyboard shortcut <pre>F12</pre> or <pre>Ctrl + Shift + I</pre></li>
+                        <li>Go to the <strong>Network</strong> tab</li>
+                        <li>Click the <strong>XHR</strong> button to filter to XHR requests only</li>
+                        <li>Do any action in Discord like <strong>opening a channel</strong></li>
+                        <li>Click the <strong>science</strong> request that shows up in the list</li>
+                        <li>Go to the <strong>Headers</strong> tab</li>
+                        <li>Find <strong>authorization</strong> under <strong>Request Headers</strong> and copy your token (make sure you copy the entire token and don't copy any spaces)</li>
                     </ul>
+                    <img src="https://i.imgur.com/2E6yB21.png" class="ui image" />
                 </p>
             </div>
             <div class="actions">
