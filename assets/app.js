@@ -250,7 +250,7 @@ $(document).ready(function() {
             let count = 0;
             for (let i in renamedEmoji) {
                 const res = await _fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
-                zip.file(`${renamedEmoji[i].name}.png`, res);
+                zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? 'gif' : 'png'}`, res);
                 count++;
             }
 
