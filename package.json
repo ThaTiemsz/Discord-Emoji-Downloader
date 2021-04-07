@@ -33,6 +33,6 @@
   "dependencies": {
     "file-saver": "^2.0.2",
     "jszip": "^3.2.2",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
