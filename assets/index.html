@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>Discord Emoji Downloader</title>
+
+    <meta name="author" content="Tiemen" />
+    <meta name="description" content="Get all emojis from a server in a ZIP file." />
+    <meta name="keywords" content="discord, emoji, emojis, discordapp, discord app, emoji downloader, download emoji" />
+    <meta name="theme-color" content="#7289DA" />
+
+    <meta property="og:title" content="Discord Emoji Downloader" />
+    <meta property="og:description" content="Get all emojis from a server in a ZIP file." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thatiemsz.github.io/Discord-Emoji-Downloader/" />
+
+    <link rel="stylesheet" type="text/css" href="assets/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/app.css" />
+    <link rel="manifest" href="/manifest.json" />
+</head>
+
+<body>
+    <div class="ui inverted raised very padded text container segment">
+        <h1 class="ui header">Discord Emoji Downloader</h1>
+
+        <div class="ui inverted secondary pointing menu">
+            <a class="item active" data-tab="default">Default</a>
+            <a class="item" data-tab="manual">Manual</a>
+        </div>
+
+        <div class="ui inverted tab segment active" id="default-1" data-tab="default">
+            <div class="ui warning message">
+                <i class="close icon"></i>
+                <div class="header">
+                    Warning: be careful, sharing your user token can be dangerous!
+                </div>
+                This page does not use your user token in any harmful way and only uses it to authenticate with Discord, fetch your server list and their emojis.<br />
+                (<a href="https://github.com/ThaTiemsz/Discord-Emoji-Downloader" target="_blank">Source can be found here</a>)
+            </div>
+            <form class="ui inverted form">
+                <div class="field">
+                    <label>User Token <a href="#" id="tokenHelp">(?)</a> </label>
+                    <input type="password" name="token" id="token" placeholder="mfa.ABcd1e2Fgh3i-jKlmnoPQRstu4VWx4yz5A6b7cDEFGhiJk8LmNOPqR_sSTUV9XyzabcdeF0Xd" />
+                </div>
+                <button name="continue" id="continue" class="ui button">Continue</button>
+            </form>
+        </div>
+
+        <div class="ui inverted tab segment" id="default-2" data-tab="default-hide">
+            <form class="ui inverted form">
+                <div class="field">
+                    <label>Server</label>
+                    <div class="ui fluid search selection dropdown" id="server-select">
+                        <input type="hidden" name="server" />
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select Server</div>
+                    </div>
+                </div>
+                <div class="field" id="emojis">
+                    <label>Select emojis <span id="emojicount"></span></label>
+                    <div class="ui fluid multiple search selection dropdown" id="emoji-select">
+                        <input type="hidden" name="emojis" />
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select Emojis</div>
+                    </div>
+                </div>
+                <div class="field" id="emojis2">
+                    <label>Select emojis <span id="emojicount2"></span></label>
+                    <div class="ui fluid multiple search selection dropdown" id="emoji-select2">
+                        <input type="hidden" name="emojis2" />
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select Emojis</div>
+                    </div>
+                </div>
+                <div class="field">
+                    <button name="submit" id="submit" class="ui primary button">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="ui inverted tab segment" id="manual" data-tab="manual">
+            <p>Make a GET request to <code>https://discordapp.com/api/v6/guilds/:id</code>, with <code>:id</code> being the server ID, also make sure you're authorised with your user token. Then copy paste the response JSON data in the textarea below <i>(in which an example is placed)</i>.</p>
+            <p>
+                <div class="ui inverted form">
+                    <div class="field">
+                        <label>Guild Object</label>
+                        <div id="editor" style="height: 350px; width: 100%;"></div>
+                    </div>
+                    <div class="field">
+                        <button name="submit" id="submit" class="ui primary button">Submit</button>
+                    </div>
+                </div>
+            </p>
+        </div>
+
+        <div id="messages">
+            <div class="ui icon message" id="loading">
+                <i class="notched circle loading icon"></i>
+                <div class="content">
+                    <div class="header" id="loading-header">
+                    Just a moment
+                    </div>
+                    <p id="loading-msg">Collecting the emojis for you.</p>
+                </div>
+            </div>
+
+            <div class="ui icon success message" id="success">
+                <i class="smile icon"></i>
+                <div class="content">
+                    <div class="header" id="success-header">
+                    We found them!
+                    </div>
+                    <p id="success-msg">Found <strong>NaN</strong> emojis which are packed in a ZIP file above.</p>
+                </div>
+            </div>
+
+            <div class="ui icon error message" id="error">
+                <i class="warning circle icon"></i>
+                <div class="content">
+                    <div class="header" id="error-header">
+                        An error occured
+                    </div>
+                    <p id="error-msg"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui basic modal">
+            <div class="ui icon header">
+                How to get your user token
+            </div>
+            <div class="content">
+                <p>
+                    <ul>
+                        <li>Open the Discord desktop app or login on the Discord website <a href="https://discord.com/app" target="_blank">here</a></li>
+                        <li>Open the Chrome Dev Tools with the keyboard shortcut <pre>F12</pre> or <pre>Ctrl + Shift + I</pre></li>
+                        <li>Go to the <strong>Network</strong> tab</li>
+                        <li>Click the <strong>XHR</strong> button to filter to XHR requests only</li>
+                        <li>Do any action in Discord like <strong>opening a channel</strong></li>
+                        <li>Click the <strong>science</strong> request that shows up in the list</li>
+                        <li>Go to the <strong>Headers</strong> tab</li>
+                        <li>Find <strong>authorization</strong> under <strong>Request Headers</strong> and copy your token (make sure you copy the entire token and don't copy any spaces)</li>
+                    </ul>
+                    <img src="https://i.imgur.com/2E6yB21.png" class="ui image" />
+                </p>
+            </div>
+            <div class="actions">
+                <div class="ui green ok inverted button">
+                    <i class="checkmark icon"></i>
+                    Got it
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-json.js"></script>
+    <script type="text/javascript" src="assets/app.js"></script>
+    <script type="text/javascript" src="assets/semantic.min.js"></script>
+</body>
+</html>

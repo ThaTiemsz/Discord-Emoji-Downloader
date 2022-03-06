@@ -1,0 +1,29 @@
+@charset "utf-8"
+
+$custom-colors: ("brand": (#5865f2, #fff))
+$scheme-main: #1b1c1d
+$dark: $scheme-main
+$text: #fff
+$tabs-link-active-color: #fff
+$tabs-border-bottom-color: transparent
+$tabs-link-active-border-bottom-color: white
+$container-max-width: 900px
+$label-color: #fff
+$label-weight: 600
+$input-color: $text
+
+@import "../node_modules/bulma/bulma.sass"
+
+.selectOption
+  display: flex
+  align-items: center
+  gap: 6px
+
+.selectLabel
+  //
+
+@include mobile
+  .level
+    margin-bottom: 0 !important
+  .level-left + .level-right
+    margin-top: 0 !important

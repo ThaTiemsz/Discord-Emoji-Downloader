@@ -1,11 +1,14 @@
 {
   "name": "discord-emoji-downloader",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Get all emojis from a server in a ZIP file",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --public-url ./"
+    "start": "parcel",
+    "build": "parcel build"
   },
+  "type": "module",
+  "source": "public/index.html",
+  "browserslist": "> 0.5%, last 2 chrome versions",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ThaTiemsz/Discord-Emoji-Downloader.git"
@@ -14,25 +17,40 @@
     "discord",
     "discord emoji",
     "discord emojis",
+    "discord sticker",
+    "discord stickers",
     "download",
     "zip"
   ],
   "author": "Tiemen",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/ThaTiemsz/Discord-Emoji-Downloader/issues"
   },
   "homepage": "https://thatiemsz.github.io/Discord-Emoji-Downloader",
-  "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.8.7",
-    "core-js": "^3.6.4",
-    "parcel-bundler": "^1.12.4",
-    "regenerator-runtime": "^0.13.5"
-  },
   "dependencies": {
-    "file-saver": "^2.0.2",
-    "jszip": "^3.2.2",
-    "node-fetch": "^2.6.0"
+    "ace-builds": "^1.4.14",
+    "bulma": "^0.9.3",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.7.1",
+    "node-fetch": "^3.2.0",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-ace": "^9.5.0",
+    "react-bulma-components": "^4.1.0",
+    "react-dom": "^17.0.2",
+    "react-select": "^5.2.2"
+  },
+  "devDependencies": {
+    "@parcel/core": "^2.3.2",
+    "@parcel/packager-raw-url": "2.3.2",
+    "@parcel/transformer-sass": "^2.3.2",
+    "@parcel/transformer-webmanifest": "2.3.2",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "parcel": "^2.3.2",
+    "postcss": "^8.4.7",
+    "postcss-modules": "^4.3.1",
+    "typescript": "^4.5.5"
   }
 }
