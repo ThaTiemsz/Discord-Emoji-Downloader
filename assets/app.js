@@ -204,16 +204,25 @@ $(document).ready(function() {
             const renamedEmoji = renameEmoji(globalThis.emojis);
             const zip = new JSZip();
             let count = 0;
+
+            let promises = []
             for (let i in renamedEmoji) {
-                let res
-                try {
-                    res = await _fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
-                } catch {
-                    console.log(`Emoji ${renamedEmoji[i].id} blocked by CORS, trying proxy`);
-                    res = await _fetch(`https://cors-anywhere.herokuapp.com/${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
-                }
-                zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
+                promises.push(new Promise((resolve, reject) => {
+                    _fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated))
+                    .then(res => {
+                        let blob = res.blob()
+                        zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, blob);
+                        resolve(blob)
+                    })
+                    .catch((e) => reject(`Emoji ${renamedEmoji[i].id} cannot be downloaded. Aborting.`))
+                }))
                 count++;
+            }
+
+            try {
+                await Promise.all(promises)
+            } catch {
+                return error("One or more emojis could not be downloaded. Aborting.");
             }
 
             $("#success-msg strong").text(count);
