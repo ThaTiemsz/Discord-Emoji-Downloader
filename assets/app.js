@@ -139,11 +139,7 @@ $(document).ready(function() {
                 globalThis.guild = await res.json();
                 globalThis.emojis = renameEmoji(globalThis.guild.emojis)
                     .sort(sortAlpha);
-
                 globalThis.stickers = globalThis.guild.stickers.sort(sortAlpha);
-
-                console.log("Emojis:", globalThis.emojis.length);
-                console.log("Stickers:", globalThis.stickers);
 
                 let emojis = globalThis.emojis.reduce((acc, val, i) => {
                     if (i > 149) {
@@ -179,8 +175,6 @@ $(document).ready(function() {
                         selected: true
                     });
                 }
-
-               
 
                 $("#emoji-select2").dropdown({
                     values: emojisDropdown2,
@@ -375,5 +369,4 @@ $(document).ready(function() {
         emojis.forEach(disambiguateEmoji);
         return disambiguatedEmoji;
     }
-
 });
