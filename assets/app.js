@@ -8,6 +8,8 @@ window.jQuery = $;
 
 const downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
 const Emoji = (emojiID, animated = false) => `https://cdn.discordapp.com/emojis/${emojiID}.${animated ? "gif" : "png"}?v=1`;
+// media.discordapp.net was used instead of cdn.discordapp.com to bypass CORS problems
+const Sticker = (stickerID) => `https://media.discordapp.net/stickers/${stickerID}.png?size=1024`;
 const API = {
     host: "https://discord.com/api/v6",
     emojis: (guild) => `/guilds/${guild}/emojis`,
@@ -89,6 +91,7 @@ $(document).ready(function() {
     $(".menu .item").tab();
     $("#emojis").hide();
     $("#emojis2").hide();
+    $("#stickers").hide();
 
     $("#tokenHelp").click(() => {
         $('.ui.basic.modal').modal('show');
@@ -96,6 +99,7 @@ $(document).ready(function() {
 
     globalThis.guild = [];
     globalThis.emojis = [];
+    globalThis.stickers = [];
     $("#default-1 #continue").click(async (e) => {
         e.preventDefault(e);
 
@@ -135,6 +139,8 @@ $(document).ready(function() {
                 globalThis.guild = await res.json();
                 globalThis.emojis = renameEmoji(globalThis.guild.emojis)
                     .sort(sortAlpha);
+                globalThis.stickers = globalThis.guild.stickers.sort(sortAlpha);
+
                 let emojis = globalThis.emojis.reduce((acc, val, i) => {
                     if (i > 149) {
                         acc[1].push(val);
@@ -178,9 +184,28 @@ $(document).ready(function() {
                     }
                 })
 
+                let stickersDropdown = [];
+                for (const sticker of globalThis.stickers) {
+                    stickersDropdown.push({
+                        name: `<img src="${Sticker(sticker.id)}" style="width: 5em!important; height: 5em!important;" /> ${sticker.name}`,
+                        value: sticker.id,
+                        selected: true
+                    });
+                }
+
+                $("#sticker-select").dropdown({
+                    values: stickersDropdown,
+                    placeholder: "Select Stickers",
+                    onChange: (value, text, $selected) => {
+                        $("#stickercount").text(`(${$("input[name='stickers']").val().split(",").length}/${globalThis.stickers.length})`);
+                    }
+                })
+
                 $("#emojis").show();
                 if (emojisDropdown2.length > 0)
                     $("#emojis2").show();
+                if (stickersDropdown.length > 0)
+                    $("#stickers").show();
                 $(".active.dimmer").remove();
             }
         });
@@ -203,6 +228,10 @@ $(document).ready(function() {
 
             const renamedEmoji = renameEmoji(globalThis.emojis);
             const zip = new JSZip();
+
+            const emojiFolder = zip.folder("Emojis");
+            const stickerFolder = zip.folder("Stickers");
+
             let count = 0;
             for (let i in renamedEmoji) {
                 let res
@@ -212,7 +241,20 @@ $(document).ready(function() {
                     console.log(`Emoji ${renamedEmoji[i].id} blocked by CORS, trying proxy`);
                     res = await _fetch(`https://cors-anywhere.herokuapp.com/${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
                 }
-                zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
+                emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
+                count++;
+            }
+
+            const renamedStickers = globalThis.stickers;
+            for (let i in renamedStickers) {
+                let res
+                try {
+                    res = await _fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
+                } catch {
+                    console.log(`Sticker ${renamedStickers[i].id} blocked by CORS, trying proxy`);
+                    res = await _fetch(`https://cors-anywhere.herokuapp.com/${Sticker(renamedStickers[i].id)}`).then(res => res.blob());
+                }
+                stickerFolder.file(`${renamedStickers[i].name}.png`, res);
                 count++;
             }
 
@@ -247,10 +289,21 @@ $(document).ready(function() {
 
             const renamedEmoji = renameEmoji(guild.emojis);
             const zip = new JSZip();
+
+            const emojiFolder = zip.folder("Emojis");
+            const stickerFolder = zip.folder("Stickers");
+
             let count = 0;
             for (let i in renamedEmoji) {
                 const res = await _fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
-                zip.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
+                emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
+                count++;
+            }
+
+
+            for (let i in guild.stickers) {
+                const res = await _fetch(Sticker(guild.stickers[i].id)).then(res => res.blob());
+                stickerFolder.file(`${guild.stickers[i].name}.png`, res);
                 count++;
             }
 
