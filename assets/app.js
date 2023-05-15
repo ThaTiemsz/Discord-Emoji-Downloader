@@ -205,6 +205,8 @@ $(document).ready(function() {
                 $("#emojis").show();
                 if (emojisDropdown2.length > 0)
                     $("#emojis2").show();
+                if (stickersDropdown.length > 0)
+                    $("#stickers").show();
                 $(".active.dimmer").remove();
             }
         });
