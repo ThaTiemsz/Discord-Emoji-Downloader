@@ -1,22 +1,17 @@
-require("core-js/stable");
-require("regenerator-runtime/runtime");
-const _fetch = require("node-fetch");
-const JSZip = require("jszip");
-const { saveAs } = require("file-saver");
-const $ = require("./jquery-3.2.1.min.js");
-window.jQuery = $;
+import * as JSZip from "jszip";
+import { saveAs } from "file-saver";
 
 const downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
 const Emoji = (emojiID, animated = false) => `https://cdn.discordapp.com/emojis/${emojiID}.${animated ? "gif" : "png"}?v=1`;
 // media.discordapp.net was used instead of cdn.discordapp.com to bypass CORS problems
 const Sticker = (stickerID) => `https://media.discordapp.net/stickers/${stickerID}.png?size=1024`;
 const API = {
-    host: "https://discord.com/api/v6",
+    host: "https://discord.com/api/v10",
     emojis: (guild) => `/guilds/${guild}/emojis`,
     guilds: "/users/@me/guilds",
     guild: (id) => `/guilds/${id}`,
     request: async (method, endpoint, token) => {
-        return await _fetch(API.host + endpoint, {
+        return await fetch(API.host + endpoint, {
             method,
             headers: {
                 "Authorization": token
@@ -232,33 +227,35 @@ $(document).ready(function() {
             const emojiFolder = zip.folder("Emojis");
             const stickerFolder = zip.folder("Stickers");
 
-            let count = 0;
+            let emojiCount = 0;
             for (let i in renamedEmoji) {
                 let res
                 try {
-                    res = await _fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
+                    res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
                 } catch {
                     console.log(`Emoji ${renamedEmoji[i].id} blocked by CORS, trying proxy`);
-                    res = await _fetch(`https://cors-anywhere.herokuapp.com/${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
+                    res = await fetch(`https://cors-anywhere.herokuapp.com/${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
                 }
                 emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
-                count++;
+                emojiCount++;
             }
-
+            
             const renamedStickers = globalThis.stickers;
+            let stickerCount = 0;
             for (let i in renamedStickers) {
                 let res
                 try {
-                    res = await _fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
+                    res = await fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
                 } catch {
                     console.log(`Sticker ${renamedStickers[i].id} blocked by CORS, trying proxy`);
-                    res = await _fetch(`https://cors-anywhere.herokuapp.com/${Sticker(renamedStickers[i].id)}`).then(res => res.blob());
+                    res = await fetch(`https://cors-anywhere.herokuapp.com/${Sticker(renamedStickers[i].id)}`).then(res => res.blob());
                 }
                 stickerFolder.file(`${renamedStickers[i].name}.png`, res);
-                count++;
+                stickerCount++;
             }
 
-            $("#success-msg strong").text(count);
+            $("#success-msg #emoji-count").text(emojiCount);
+            $("#success-msg #sticker-count").text(stickerCount);
             show("#success");
             $("#default-2 #submit").after(downloadBtn);
 
@@ -293,21 +290,22 @@ $(document).ready(function() {
             const emojiFolder = zip.folder("Emojis");
             const stickerFolder = zip.folder("Stickers");
 
-            let count = 0;
+            let emojiCount = 0;
             for (let i in renamedEmoji) {
-                const res = await _fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
+                const res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
                 emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
-                count++;
+                emojiCount++;
             }
-
-
+            
+            let stickerCount = 0;
             for (let i in guild.stickers) {
-                const res = await _fetch(Sticker(guild.stickers[i].id)).then(res => res.blob());
+                const res = await fetch(Sticker(guild.stickers[i].id)).then(res => res.blob());
                 stickerFolder.file(`${guild.stickers[i].name}.png`, res);
-                count++;
+                stickerCount++;
             }
 
-            $("#success-msg strong").text(count);
+            $("#success-msg #emoji-count").text(emojiCount);
+            $("#success-msg #sticker-count").text(stickerCount);
             show("#success");
             $("#manual #submit").after(downloadBtn);
 
