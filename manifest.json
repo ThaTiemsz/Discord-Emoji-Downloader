@@ -1,0 +1,9 @@
+{
+  "name": "Discord Emoji Downloader",
+  "short_name": "Discord Emoji Downloader",
+  "theme_color": "#7289da",
+  "background_color": "#7289da",
+  "display": "browser",
+  "scope": "/",
+  "start_url": "/"
+}

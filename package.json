@@ -1,0 +1,38 @@
+{
+  "name": "discord-emoji-downloader",
+  "version": "1.3.0",
+  "description": "Get all emojis from a server in a ZIP file",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --public-url ./"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThaTiemsz/Discord-Emoji-Downloader.git"
+  },
+  "keywords": [
+    "discord",
+    "discord emoji",
+    "discord emojis",
+    "download",
+    "zip"
+  ],
+  "author": "Tiemen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThaTiemsz/Discord-Emoji-Downloader/issues"
+  },
+  "homepage": "https://thatiemsz.github.io/Discord-Emoji-Downloader",
+  "dependencies": {
+    "file-saver": "^2.0.2",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.8.3",
+    "@parcel/transformer-webmanifest": "^2.8.3",
+    "buffer": "^5.7.1",
+    "parcel": "^2.8.3",
+    "process": "^0.11.10"
+  }
+}
