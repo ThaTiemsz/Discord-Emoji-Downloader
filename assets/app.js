@@ -192,7 +192,6 @@ $(document).ready(function() {
                         selected: true
                     });
                 }
-                console.log(stickersDropdown);
 
                 $("#sticker-select").dropdown({
                     values: stickersDropdown,
