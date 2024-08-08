@@ -234,7 +234,7 @@ $(document).ready(function() {
                     res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
                 } catch {
                     console.log(`Emoji ${renamedEmoji[i].id} blocked by CORS, trying proxy`);
-                    res = await fetch(`https://cors-anywhere.herokuapp.com/${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
+                    res = await fetch(`https://corsproxy.io/?${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
                 }
                 emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
                 emojiCount++;
@@ -248,7 +248,7 @@ $(document).ready(function() {
                     res = await fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
                 } catch {
                     console.log(`Sticker ${renamedStickers[i].id} blocked by CORS, trying proxy`);
-                    res = await fetch(`https://cors-anywhere.herokuapp.com/${Sticker(renamedStickers[i].id)}`).then(res => res.blob());
+                    res = await fetch(`https://corsproxy.io/?${Sticker(renamedStickers[i].id)}`).then(res => res.blob());
                 }
                 stickerFolder.file(`${renamedStickers[i].name}.png`, res);
                 stickerCount++;
