@@ -143,12 +143,9 @@
                     <ul>
                         <li>Open the Discord desktop app or login on the Discord website <a href="https://discord.com/app" target="_blank">here</a></li>
                         <li>Open the Chrome Dev Tools with the keyboard shortcut <pre>F12</pre> or <pre>Ctrl + Shift + I</pre></li>
-                        <li>Go to the <strong>Network</strong> tab</li>
-                        <li>Click the <strong>XHR</strong> button to filter to XHR requests only</li>
-                        <li>Do any action in Discord like <strong>opening a channel</strong></li>
-                        <li>Click the <strong>science</strong> request that shows up in the list</li>
-                        <li>Go to the <strong>Headers</strong> tab</li>
-                        <li>Find <strong>authorization</strong> under <strong>Request Headers</strong> and copy your token (make sure you copy the entire token and don't copy any spaces)</li>
+                        <li>To enable the ability to paste in the cnsole you might need to type "<code style="user-select: all;">allow pasting</code>"</li>
+                        <li>Paste and execute the following snippet: <code style="user-select: all;">(webpackChunkdiscord_app.push([[''],{},e=&gt;{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=&gt;m?.exports?.default?.getToken!==void 0).exports.default.getToken()</code></li>
+                        <li>Your token will be returned at the bottom of the console. Copy the contents between "". This is your self token.</li>
                     </ul>
                     <img src="https://i.imgur.com/2E6yB21.png" class="ui image" />
                 </p>
