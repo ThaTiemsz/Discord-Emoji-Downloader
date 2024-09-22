@@ -210,10 +210,12 @@ $(document).ready(function() {
     $("#default-2 #submit").click(async (e) => {
         e.preventDefault(e);
 
-        if (!globalThis.emojis.length) return error("Please select at least one emoji.");
+        if (!globalThis.emojis.length || globalThis.stickers.length) { return error('Please select at least one emoji or sticker.') }
         try {
-            if (globalThis.guild.emojis.length < 1) return error("This server doesn't have any emojis!");
-            const cleanGuildName = globalThis.guild.name.replace(/\s/g, "_").replace(/\W/g, "");
+            if (globalThis.guild.emojis.length < 1 && globalThis.guild.stickers.length < 1) { return error("This server doesn't have any emojis or stickers!") }
+            const cleanGuildName = globalThis.guild.name
+                .replace(/\s/g, "_")
+                .replace(/\W/g, "");
             console.log("Emojis:", globalThis.emojis.length);
 
             show("#loading");
