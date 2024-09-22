@@ -236,7 +236,7 @@ $(document).ready(function() {
 
             let emojiCount = 0;
             for (let i in renamedEmoji) {
-                let res
+                let res;
                 try {
                     res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
                 } catch {
@@ -250,7 +250,7 @@ $(document).ready(function() {
             const renamedStickers = globalThis.stickers;
             let stickerCount = 0;
             for (let i in renamedStickers) {
-                let res
+                let res;
                 try {
                     res = await fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
                 } catch {
