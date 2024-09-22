@@ -1,6 +1,3 @@
-import * as JSZip from "jszip";
-import { saveAs } from "file-saver";
-
 const downloadBtn = $(`<button class="ui labeled icon red button" id="download" type="button"><i class="cloud icon"></i>Download</button>`);
 const Emoji = (emojiID, animated = false) => `https://cdn.discordapp.com/emojis/${emojiID}.${animated ? "gif" : "png"}?v=1`;
 // media.discordapp.net was used instead of cdn.discordapp.com to bypass CORS problems
@@ -213,10 +210,12 @@ $(document).ready(function() {
     $("#default-2 #submit").click(async (e) => {
         e.preventDefault(e);
 
-        if (!globalThis.emojis.length) return error("Please select at least one emoji.");
+        if (!globalThis.emojis.length && !globalThis.stickers.length) { return error('Please select at least one emoji or sticker.') }
         try {
-            if (globalThis.guild.emojis.length < 1) return error("This server doesn't have any emojis!");
-            const cleanGuildName = globalThis.guild.name.replace(/\s/g, "_").replace(/\W/g, "");
+            if (globalThis.guild.emojis.length < 1 && globalThis.guild.stickers.length < 1) { return error("This server doesn't have any emojis or stickers!") }
+            const cleanGuildName = globalThis.guild.name
+                .replace(/\s/g, "_")
+                .replace(/\W/g, "");
             console.log("Emojis:", globalThis.emojis.length);
 
             show("#loading");
