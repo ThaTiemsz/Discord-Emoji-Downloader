@@ -210,7 +210,7 @@ $(document).ready(function() {
     $("#default-2 #submit").click(async (e) => {
         e.preventDefault(e);
 
-        if (!globalThis.emojis.length || !globalThis.stickers.length) { return error('Please select at least one emoji or sticker.') }
+        if (!globalThis.emojis.length && !globalThis.stickers.length) { return error('Please select at least one emoji or sticker.') }
         try {
             if (globalThis.guild.emojis.length < 1 && globalThis.guild.stickers.length < 1) { return error("This server doesn't have any emojis or stickers!") }
             const cleanGuildName = globalThis.guild.name
