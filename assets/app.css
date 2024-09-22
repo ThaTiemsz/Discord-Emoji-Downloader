@@ -7,3 +7,9 @@ body {
 #messages div.message {
 	display: none;
 }
+
+.link {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+    }

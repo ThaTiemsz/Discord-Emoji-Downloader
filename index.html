@@ -15,9 +15,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://thatiemsz.github.io/Discord-Emoji-Downloader/" />
 
-    <link rel="stylesheet" type="text/css" href="assets/semantic.min.css" />
-    <link rel="stylesheet" type="text/css" href="assets/app.css" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" type="text/css" href="./assets/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/app.css" />
+    <link rel="manifest" href="./manifest.json" />
 </head>
 
 <body>
@@ -40,7 +40,7 @@
             </div>
             <form class="ui inverted form">
                 <div class="field">
-                    <label>User Token <a href="#" id="tokenHelp">(?)</a> </label>
+                    <label>User Token <span class="link" onclick="javascript:helpModal();">(?)</span></label>
                     <input type="password" name="token" id="token" placeholder="mfa.ABcd1e2Fgh3i-jKlmnoPQRstu4VWx4yz5A6b7cDEFGhiJk8LmNOPqR_sSTUV9XyzabcdeF0Xd" />
                 </div>
                 <button name="continue" id="continue" class="ui button">Continue</button>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="ui inverted tab segment" id="manual" data-tab="manual">
-            <p>Make a GET request to <code>https://discordapp.com/api/v6/guilds/:id</code>, with <code>:id</code> being the server ID, also make sure you're authorised with your user token. Then copy paste the response JSON data in the textarea below <i>(in which an example is placed)</i>.</p>
+            <p>Make a GET request to <code>https://discord.com/api/v10/guilds/:id</code>, with <code>:id</code> being the server ID, also make sure you're authorised with your user token. Then copy paste the response JSON data in the textarea below <i>(in which an example is placed)</i>.</p>
             <p>
                 <div class="ui inverted form">
                     <div class="field">
@@ -158,10 +158,23 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-json.js"></script>
-    <script type="text/javascript" src="/assets/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="/assets/semantic.min.js"></script>
-    <script type="module" src="/assets/app.js"></script>
+    <script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-json.js"
+    ></script>
+    <script type="text/javascript" src="./assets/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./assets/semantic.js"></script>
+    <script type="text/javascript" src="./assets/FileSaver.js"></script>
+    <script type="text/javascript" src="./assets/jszip.js"></script>
+    <script type="module" src="./assets/app.js"></script>
+    <script>
+        const helpModal = () => {
+            $('.ui.basic.modal').modal('show')
+        }
+    </script>
 </body>
 </html>
