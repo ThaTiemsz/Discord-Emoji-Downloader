@@ -86,7 +86,11 @@ $(document).ready(function() {
     $("#stickers").hide();
 
     $("#tokenHelp").click(() => {
-        $('.ui.basic.modal').modal('show');
+        $(".ui.basic.modal").modal("show");
+    });
+
+    $("button#continue").click(() => {
+        $("#error").hide();
     });
 
     globalThis.guild = [];
@@ -97,12 +101,12 @@ $(document).ready(function() {
 
         let success;
         let token = $("#token").val();
+        if (!token) return error("Invalid token.");
+
         $("#continue").addClass("loading");
 
-        if (!token) return;
         token = token.replace(/^"(.+)"$/, "$1");
-
-        success = true
+        success = true;
 
         let res = await API.request("GET", API.guilds, token);
         if (!res.ok) return error(res.status === 401 ? "Invalid token." : "Could not authenticate with Discord.");
@@ -210,9 +214,13 @@ $(document).ready(function() {
     $("#default-2 #submit").click(async (e) => {
         e.preventDefault(e);
 
-        if (!globalThis.emojis.length && !globalThis.stickers.length) { return error('Please select at least one emoji or sticker.') }
+        if (!globalThis.emojis.length && !globalThis.stickers.length)
+            return error("Please select at least one emoji or sticker.");
+
         try {
-            if (globalThis.guild.emojis.length < 1 && globalThis.guild.stickers.length < 1) { return error("This server doesn't have any emojis or stickers!") }
+            if (globalThis.guild.emojis.length < 1 && globalThis.guild.stickers.length < 1)
+                return error("This server doesn't have any emojis or stickers!");
+
             const cleanGuildName = globalThis.guild.name
                 .replace(/\s/g, "_")
                 .replace(/\W/g, "");
@@ -238,7 +246,7 @@ $(document).ready(function() {
                 emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
                 emojiCount++;
             }
-            
+
             const renamedStickers = globalThis.stickers;
             let stickerCount = 0;
             for (let i in renamedStickers) {
@@ -295,7 +303,7 @@ $(document).ready(function() {
                 emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
                 emojiCount++;
             }
-            
+
             let stickerCount = 0;
             for (let i in guild.stickers) {
                 const res = await fetch(Sticker(guild.stickers[i].id)).then(res => res.blob());
@@ -316,11 +324,6 @@ $(document).ready(function() {
         } catch(err) {
             return error("Recheck your code, it threw some syntax errors.", err);
         }
-    });
-
-
-    $("button#continue").click(() => {
-        $("#error").hide();
     });
 
     function show(id) {

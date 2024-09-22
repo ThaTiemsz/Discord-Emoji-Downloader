@@ -15,7 +15,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://thatiemsz.github.io/Discord-Emoji-Downloader/" />
 
-    <link rel="stylesheet" type="text/css" href="./assets/semantic.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="./assets/app.css" />
     <link rel="manifest" href="./manifest.json" />
 </head>
@@ -40,7 +40,7 @@
             <form class="ui inverted form">
                 <div class="field">
                     <label>User Token <span class="link" onclick="javascript:helpModal();">(?)</span></label>
-                    <input type="password" name="token" id="token" placeholder="mfa.ABcd1e2Fgh3i-jKlmnoPQRstu4VWx4yz5A6b7cDEFGhiJk8LmNOPqR_sSTUV9XyzabcdeF0Xd" />
+                    <input type="password" name="token" id="token" placeholder="mfa.ABcd1e2Fgh3i-jKlmnoPQRstu4VWx4yz5A6b7cDEFGhiJk8LmNOPqR_sSTUV9XyzabcdeF0Xd" autocomplete="new-password" />
                 </div>
                 <button name="continue" id="continue" class="ui button">Continue</button>
             </form>
@@ -143,8 +143,13 @@
                         <li>Open the Discord desktop app or login on the Discord website <a href="https://discord.com/app" target="_blank">here</a></li>
                         <li>Open the Chrome Dev Tools with the keyboard shortcut <pre>F12</pre> or <pre>Ctrl + Shift + I</pre></li>
                         <li>To enable the ability to paste in the console you might need to type "<code style="user-select: all;">allow pasting</code>"</li>
-                        <li>Paste and execute the following snippet: <code style="user-select: all;">(webpackChunkdiscord_app.push([[''],{},e=&gt;{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=&gt;m?.exports?.default?.getToken!==void 0).exports.default.getToken()</code></li>
-                        <li>Your token will be returned at the bottom of the console. Copy the contents between "". This is your self token.</li>
+                        <li>
+                            Paste and execute the following snippet:
+                            <p>
+                                <code style="user-select: all;">(webpackChunkdiscord_app.push([[''],{},e=&gt;{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=&gt;m?.exports?.default?.getToken!==void 0).exports.default.getToken()</code>
+                            </p>
+                        </li>
+                        <li>Your token will be returned at the bottom of the console. Copy the contents between "". This is your user token.</li>
                     </ul>
                 </p>
             </div>
@@ -157,18 +162,13 @@
         </div>
     </div>
 
-    <script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"
-    ></script>
-    <script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-json.js"
-    ></script>
-    <script type="text/javascript" src="./assets/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="./assets/semantic.js"></script>
-    <script type="text/javascript" src="./assets/FileSaver.js"></script>
-    <script type="text/javascript" src="./assets/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/ace.min.js" integrity="sha512-xylzfb6LZn1im1ge493MNv0fISAU4QkshbKz/jVh6MJFAlZ6T1NRDJa0ZKb7ECuhSTO7fVy8wkXkT95/f4R4nA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/mode-json.min.js" integrity="sha512-K+H+3WTfhwE9fnfv4makUYJxz4kwIadQPOjGHAmOT96FtMSPRnvnuGR/sZjuNB2MmmHQ94Mnc9zoDxTHKMMEww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script type="module" src="./assets/app.js"></script>
     <script>
         const helpModal = () => {
