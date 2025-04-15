@@ -1,0 +1,35 @@
+{
+    "name": "discord-emoji-downloader",
+    "private": true,
+    "version": "2.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "lint": "eslint .",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "primereact": "^10.9.4",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "react-select": "^5.10.1"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.24.0",
+        "@stylistic/eslint-plugin": "^4.2.0",
+        "@tailwindcss/vite": "^4.1.3",
+        "@types/react": "^19.1.1",
+        "@types/react-dom": "^19.1.2",
+        "@vitejs/plugin-react-swc": "^3.8.1",
+        "eslint": "^9.24.0",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "eslint-plugin-react-refresh": "^0.4.19",
+        "globals": "^16.0.0",
+        "tailwind-merge": "^3.2.0",
+        "tailwindcss": "^4.1.3",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.29.1",
+        "vite": "^6.2.6"
+    }
+}
