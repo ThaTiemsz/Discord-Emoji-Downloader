@@ -146,7 +146,7 @@
                         <li>
                             Paste and execute the following snippet:
                             <p>
-                                <code style="user-select: all;">(()=>{let t;window.webpackChunkdiscord_app.push([[Math.random()],{},r=>{for(const i in r.c){const m=r.c[i],f=m?.exports?.default?.getToken??m?.exports?.getToken;if(typeof f=="function"){t=f();return}}}]);t?console.log(`"${t}"`):console.warn("Token not found.");})();</code>
+                                <code style="user-select: all;">{webpackChunkdiscord_app.push([[Math.random()],{},e=>{e.b&&(m=Object.values(e.c))}]);let e=m.find((e=>!e?.exports?.messagesLoader&&e?.exports?.default?.getToken))?.exports?.default?.getToken?.();e?console.log(`"${e}"`):console.warn("Token not found.")}</code>
                             </p>
                         </li>
                         <li>Your token will be returned at the bottom of the console. Copy the contents between "". This is your user token.</li>
